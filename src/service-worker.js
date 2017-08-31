@@ -1,19 +1,27 @@
-var CACHE_NAME = 'cache1';
+var CACHE_NAME = 'prpl-cache';
 var filesToCache = [
   './inline.bundle.js',
+  './styles.bundle.js',
   './main.bundle.js',
   './polyfills.bundle.js',
-  './styles.bundle.js'
+  './vendor.bundle.js'
 ];
 var directoryToCache = [
   './assets/'
 ];
 
 self.addEventListener('install', function(event) {
-  // Perform install steps
   event.waitUntil(
     caches.open(CACHE_NAME).then(function(cache) {
-      console.log('[ServiceWorker] Caching app shell');
+      // TODO : Añadir directorio ASSETS 
+/*      cache.matchAll(directoryToCache).then(function(response) {
+        console.log("cache.matchAll" + response);
+        response.forEach(function (element, index, array) {
+          console.log("ELEMENT [JSON] : "+JSON.stringify(element));
+          filesToCache.add(element);
+        });
+      });*/
+      console.log('[ServiceWorker] install');
       return cache.addAll(filesToCache);
     })
   );
@@ -22,12 +30,12 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('activate', function(event) {
   var cacheWhitelist = ['cache1', 'cache2'];
-
   event.waitUntil(
     caches.keys().then(function(cacheNames) {
       return Promise.all(
         cacheNames.map(function(cacheName) {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
+            console.log('[ServiceWorker] activate');
             return caches.delete(cacheName);
           }
         })
@@ -50,6 +58,7 @@ self.addEventListener('fetch', function(event) {
         // to clone the response.
         var fetchRequest = event.request.clone();
 
+        console.log('[ServiceWorker] fetch');
         return fetch(fetchRequest).then(
           function(response) {
             // Check if we received a valid response
