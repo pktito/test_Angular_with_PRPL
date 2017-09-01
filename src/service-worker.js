@@ -6,36 +6,24 @@ var filesToCache = [
   './polyfills.bundle.js',
   './vendor.bundle.js'
 ];
-var directoryToCache = [
-  './assets/'
-];
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function(cache) {
-      // TODO : Añadir directorio ASSETS 
-/*      cache.matchAll(directoryToCache).then(function(response) {
-        console.log("cache.matchAll" + response);
-        response.forEach(function (element, index, array) {
-          console.log("ELEMENT [JSON] : "+JSON.stringify(element));
-          filesToCache.add(element);
-        });
-      });*/
       console.log('[ServiceWorker] install');
       return cache.addAll(filesToCache);
     })
   );
 });
 
-
 self.addEventListener('activate', function(event) {
-  var cacheWhitelist = ['cache1', 'cache2'];
+  console.log('Activating new service worker...');
+  var cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then(function(cacheNames) {
       return Promise.all(
         cacheNames.map(function(cacheName) {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
-            console.log('[ServiceWorker] activate');
             return caches.delete(cacheName);
           }
         })
@@ -44,9 +32,30 @@ self.addEventListener('activate', function(event) {
   );
 });
 
+/*self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request)
+      .then(function(response) {
+          // Cache hit - return the response from the cached version
+          if (response) {
+            console.log('[fetch] Returning from Service Worker cache: ', event.request.url);
+            return response;
+          }
+
+          // Not in cache - return the result from the live server
+          // `fetch` is essentially a "fallback"
+          console.log('[fetch] Returning from server: ', event.request.body);
+          return fetch(event.request);
+        }
+      )
+  );
+});*/
+
+
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request).then(function(response) {
+
         // Cache hit - return response
         if (response) {
           return response;
@@ -57,8 +66,6 @@ self.addEventListener('fetch', function(event) {
         // once by cache and once by the browser for fetch, we need
         // to clone the response.
         var fetchRequest = event.request.clone();
-
-        console.log('[ServiceWorker] fetch');
         return fetch(fetchRequest).then(
           function(response) {
             // Check if we received a valid response
