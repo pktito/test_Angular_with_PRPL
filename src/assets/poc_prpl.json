@@ -1,0 +1,6 @@
+{
+  "films": [
+    { "id": 1, "title": "DB", "author": "Akira Toriyama" },
+    { "id": 2, "title": "DBZ", "author": "Akira Toriyama" }
+  ]
+}
