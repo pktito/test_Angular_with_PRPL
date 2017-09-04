@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { HttpCacheModule } from 'ng-http-cache';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -12,7 +13,8 @@ import { PersistenceModule } from 'angular-persistence';
   imports: [
     BrowserModule,
     HttpClientModule,
-    PersistenceModule
+    PersistenceModule,
+    HttpCacheModule
   ],
   providers: [],
   bootstrap: [AppComponent]
