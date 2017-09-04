@@ -9,8 +9,6 @@ export class AppComponent {
   title = 'Poc Angular [PRPL]';
   public results = [];
 
-  constructor() {
-  }
-
+  constructor() {}
 }
 
