@@ -1,11 +1,19 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>{{title}} {{connection}}</h1>
-  <img width="300" src="assets/homer.jpg" srcset="assets/homer.jpg 1x, assets/homer.2x.jpg 2x">
-</div>
-<div class="customView">
-  <div *ngFor="let serie of results" class="row">
-    <div class="col">{{ serie.title }}</div>
-    <div class="col">{{ serie.author }}</div>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" routerLink="/"> PoC </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/series" routerLinkActive="active">SERIES</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/movies" routerLinkActive="active">MOVIES</a>
+      </li>
+    </ul>
   </div>
-</div>
+</nav>
+<router-outlet></router-outlet>

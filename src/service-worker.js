@@ -17,7 +17,7 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('activate', function(event) {
-  console.log('Activating new service worker...');
+  console.log('[ServiceWorker] Activating new service worker...');
   var cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then(function(cacheNames) {
@@ -55,6 +55,7 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request).then(function(response) {
+      console.log('[ServiceWorker] fecth', response);
 
         // Cache hit - return response
         if (response) {
