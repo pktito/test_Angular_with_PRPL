@@ -1,6 +1,6 @@
+import { Http } from '@angular/http';
 import * as CONST from './constants';
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { PersistenceService, StorageType } from 'angular-persistence';
 
 @Component({
@@ -13,7 +13,7 @@ export class AppComponent {
   connection: any;
   results: any;
 
-  constructor( private http: HttpClient, private persistenceService: PersistenceService ) {
+  constructor( private http: Http, private persistenceService: PersistenceService ) {
     this.getFilms();
   }
 
