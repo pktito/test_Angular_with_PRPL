@@ -1,0 +1,18 @@
+{
+  "name": "json-server-prpl",
+  "version": "1.0.0",
+  "description": "json-server prpl",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently --kill-others \"npm run start:server\" \"npm run update:watch\"",
+    "start:server": "json-server --watch index.js",
+    "update:watch": "onchange 'src/**/*.json' -- node update"
+  },
+  "author": "roberto zazo",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^3.5.0",
+    "json-server": "^0.12.0",
+    "onchange": "^3.2.1"
+  }
+}
