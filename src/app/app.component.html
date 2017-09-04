@@ -1,6 +1,11 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h1>{{title}}!</h1>
+  <h1>{{title}} {{connection}}</h1>
   <img width="300" src="assets/homer.jpg" srcset="assets/homer.jpg 1x, assets/homer.2x.jpg 2x">
 </div>
-<h2>Here are some links to help you start: </h2>
+<div class="customView">
+  <div *ngFor="let serie of results" class="row">
+    <div class="col">{{ serie.title }}</div>
+    <div class="col">{{ serie.author }}</div>
+  </div>
+</div>
