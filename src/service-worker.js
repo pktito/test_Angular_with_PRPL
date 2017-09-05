@@ -55,10 +55,9 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request).then(function(response) {
-      console.log('[ServiceWorker] fecth', response);
-
         // Cache hit - return response
         if (response) {
+          console.log('[fetch] Returning from Service Worker cache: ', event.request.url);
           return response;
         }
 
@@ -71,6 +70,7 @@ self.addEventListener('fetch', function(event) {
           function(response) {
             // Check if we received a valid response
             if(!response || response.status !== 200 || response.type !== 'basic') {
+              console.log('[fetch] Returning from Service Worker cache: ', event.request.url);
               return response;
             }
 
@@ -83,6 +83,7 @@ self.addEventListener('fetch', function(event) {
               .then(function(cache) {
                 cache.put(event.request, responseToCache);
               });
+            console.log('[fetch] Returning from server: ', event.request.body);
             return response;
           }
         );
